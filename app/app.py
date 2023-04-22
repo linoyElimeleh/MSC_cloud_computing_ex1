@@ -15,7 +15,7 @@ def entry_parking():
     parking_lot = request.args.get('parkingLot')
 
     # generate ticket id by concatenating plate and current timestamp
-    ticket_id = plate + str(datetime_now.timestamp())
+    ticket_id = plate + str(datetime_now.timestamp())  # TODO put special character or just use number - this can cause collision
 
     # store entry data in dictionary
     parking_lot_data[ticket_id] = [plate, parking_lot, datetime_now]
