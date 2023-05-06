@@ -8,7 +8,7 @@ import json
 app = Flask(__name__)
 
 TABLE_NAME = 'ParkingLotDB'
-dynamodb_client = boto3.resource('dynamodb')
+dynamodb_client = boto3.resource('dynamodb', region_name='eu-central-1')
 parking_lot_table = dynamodb_client.Table('ParkingLotDB')
 
 
