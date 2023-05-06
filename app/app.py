@@ -7,7 +7,8 @@ from datetime import datetime
 app = Flask(__name__)
 
 TABLE_NAME = 'ParkingLotDB'
-dynamodb_client = boto3.client('dynamodb')
+dynamodb_client = boto3.resource('dynamodb')
+parking_lot_table = dynamodb_client.Table('ParkingLotDB')
 
 
 class DynamoDbKeys(Enum):
@@ -25,11 +26,10 @@ def entry_parking():
 
     ticket_id = calculate_unique_ticket_id(entry_time, plate_number)
 
-    dynamodb_client.put_item(TableName=TABLE_NAME,
-                             Item={DynamoDbKeys.TICKET_ID.value: {'S': ticket_id},
-                                   DynamoDbKeys.ENTRY_TIMESTAMP.value: {'S': entry_time.strftime('%s')},
-                                   DynamoDbKeys.PLATE_NUMBER.value: {'S': plate_number},
-                                   DynamoDbKeys.PARKING_LOT.value: {'S': parking_lot}})
+    parking_lot_table.put_item(Item={DynamoDbKeys.TICKET_ID.value: ticket_id,
+                                     DynamoDbKeys.ENTRY_TIMESTAMP.value: entry_time.strftime('%s'),
+                                     DynamoDbKeys.PLATE_NUMBER.value: plate_number,
+                                     DynamoDbKeys.PARKING_LOT.value: parking_lot})
 
     return jsonify({'ticketId': ticket_id})
 
@@ -42,13 +42,12 @@ def calculate_unique_ticket_id(datetime, plate_number):
 def exit_parking():
     ticket_id = request.args.get('ticketId')
 
-    car_data = dynamodb_client.get_item(TableName=TABLE_NAME,
-                                        Key={DynamoDbKeys.TICKET_ID.value: {'S': ticket_id}})
+    car_data = parking_lot_table.get_item(Key={DynamoDbKeys.TICKET_ID.value: ticket_id})
     if car_data is None:
         return jsonify({'error': 'Invalid ticketId'})
-    entry_time = datetime.fromtimestamp(int(car_data["Item"][DynamoDbKeys.ENTRY_TIMESTAMP.value]['S']))
-    plate_number = car_data["Item"][DynamoDbKeys.PLATE_NUMBER.value]['S']
-    parking_lot = car_data["Item"][DynamoDbKeys.PARKING_LOT.value]['S']
+    entry_time = datetime.fromtimestamp(int(car_data["Item"][DynamoDbKeys.ENTRY_TIMESTAMP.value]))
+    plate_number = car_data["Item"][DynamoDbKeys.PLATE_NUMBER.value]
+    parking_lot = car_data["Item"][DynamoDbKeys.PARKING_LOT.value]
 
     # calculate parked time in minutes
     parked_time_minutes = int((datetime.now() - entry_time).total_seconds() / 60)
