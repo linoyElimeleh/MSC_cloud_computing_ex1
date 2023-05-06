@@ -5,14 +5,14 @@ MY_IP=$(curl --silent ipinfo.io/ip)
 
 echo "PC_IP_ADDRESS: $MY_IP"
 
-# TODO ADD DB
-#echo "Create table"
-#aws dynamodb create-table \
-#    --table-name "ParkingLot" \
-#    --attribute-definitions AttributeName=ticketId,AttributeType=S \
-#    --key-schema AttributeName=ticketId,KeyType=HASH \
-#    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
-#
+echo "Create table"
+aws dynamodb create-table \
+    --table-name "ParkingLotDB" \
+    --attribute-definitions AttributeName=ticketId,AttributeType=S \
+    --key-schema AttributeName=ticketId,KeyType=HASH \
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 | tr -d '"'
+
+aws dynamodb describe-table --table-name ParkingLotDB | grep TableStatus
 
 echo "creating ec2 key pair: $KEY_NAME"
 aws ec2 create-key-pair \

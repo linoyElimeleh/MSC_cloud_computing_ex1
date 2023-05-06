@@ -16,3 +16,4 @@ aws ec2 delete-key-pair --key-name $KEY_NAME
 yes | rm -r $KEY_PAIR_FILE
 An error occurred (DependencyViolation) when calling the DeleteSecurityGroup operation: resource sg-0706f6451bba82a25 has a dependent object
 
+aws dynamodb delete-table --table-name "ParkingLotDB" | tr -d '"'
