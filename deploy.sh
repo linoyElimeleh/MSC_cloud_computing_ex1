@@ -8,8 +8,8 @@ echo "PC_IP_ADDRESS: $MY_IP"
 echo "Create table"
 aws dynamodb create-table \
     --table-name "ParkingLotDB" \
-    --attribute-definitions AttributeName=ticketId,AttributeType=S \
-    --key-schema AttributeName=ticketId,KeyType=HASH \
+    --attribute-definitions AttributeName=ticket_id,AttributeType=S \
+    --key-schema AttributeName=ticket_id,KeyType=HASH \
     --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 | tr -d '"'
 
 aws dynamodb describe-table --table-name ParkingLotDB | grep TableStatus
