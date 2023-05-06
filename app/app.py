@@ -4,8 +4,20 @@ from flask import Response, Flask, request
 import boto3
 from datetime import datetime
 import json
+from logging.handlers import RotatingFileHandler
+import logging
+import sys
 
 app = Flask(__name__)
+
+# Configure the logger
+handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
+handler.setLevel(logging.INFO)
+app.logger.addHandler(handler)
+
+# Redirect stdout and stderr to the logger
+sys.stdout = handler.stream
+sys.stderr = handler.stream
 
 TABLE_NAME = 'ParkingLotDB'
 dynamodb_client = boto3.resource('dynamodb', region_name='eu-central-1')
