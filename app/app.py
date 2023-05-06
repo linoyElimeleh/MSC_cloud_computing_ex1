@@ -1,5 +1,5 @@
 from enum import Enum
-
+import math
 from flask import Flask, request, jsonify
 import boto3
 from datetime import datetime
@@ -54,7 +54,7 @@ def exit_parking():
     parked_time_minutes = int((datetime.now() - entry_time).total_seconds() / 60)
 
     # calculate charge based on parked time (rounded up to nearest 15 minutes)
-    charge = round(parked_time_minutes / 15) * 2.5
+    charge = math.ceil(parked_time_minutes / 15) * 2.5
 
     return jsonify({'licensePlate': plate_number,
                     'parkedTime': parked_time_minutes,
