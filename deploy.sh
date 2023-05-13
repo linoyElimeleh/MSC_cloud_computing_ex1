@@ -5,15 +5,6 @@ MY_IP=$(curl --silent ipinfo.io/ip)
 
 echo "PC_IP_ADDRESS: $MY_IP"
 
-echo "Create table"
-aws dynamodb create-table \
-    --table-name "ParkingLotDB" \
-    --attribute-definitions AttributeName=ticket_id,AttributeType=S \
-    --key-schema AttributeName=ticket_id,KeyType=HASH \
-    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 | tr -d '"'
-
-aws dynamodb describe-table --table-name ParkingLotDB | grep TableStatus
-
 echo "creating ec2 key pair: $KEY_NAME"
 aws ec2 create-key-pair \
     --key-name $KEY_NAME \
@@ -36,12 +27,25 @@ aws ec2 authorize-security-group-ingress        \
     --group-name $SEC_GRP --port 5000 --protocol tcp \
     --cidr $MY_IP/32 | tr -d '"'
 
+echo "Create table"
+aws dynamodb create-table \
+    --table-name "ParkingLotDB" \
+    --attribute-definitions AttributeName=ticket_id,AttributeType=S \
+    --key-schema AttributeName=ticket_id,KeyType=HASH \
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 | tr -d '"'
+
+aws dynamodb describe-table --table-name ParkingLotDB | grep TableStatus
+
+aws iam attach-role-policy --role-name dynamodb-full-access-role --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+
 echo "Launching EC2 instance"
 RUN_INSTANCES=$(aws ec2 run-instances   \
     --image-id "ami-04aa66cdfe687d427"  \
     --instance-type t2.micro            \
     --key-name $KEY_NAME                \
-    --security-groups $SEC_GRP)         \
+    --security-groups $SEC_GRP          \
+    --iam-instance-profile Name="EC2_DynamoDB")
+
 
 INSTANCE_ID=$(echo $RUN_INSTANCES | jq -r '.Instances[0].InstanceId')
 
@@ -67,4 +71,5 @@ ssh -o "StrictHostKeyChecking=no" -o "ConnectionAttempts=10" -i $KEY_PAIR_FILE u
     pip3 install -r requirements.txt
     export FLASK_APP=app/app.py
     python3 -m flask run --host=0.0.0.0
+    exit
 EOF
