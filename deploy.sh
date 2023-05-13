@@ -22,7 +22,6 @@ aws ec2 authorize-security-group-ingress        \
     --group-name $SEC_GRP --port 22 --protocol tcp \
     --cidr $MY_IP/32 | tr -d '"'
 
-#TODO choose flask or fastapi
 aws ec2 authorize-security-group-ingress        \
     --group-name $SEC_GRP --port 5000 --protocol tcp \
     --cidr $MY_IP/32 | tr -d '"'
@@ -36,20 +35,25 @@ aws dynamodb create-table \
 
 aws dynamodb describe-table --table-name ParkingLotDB | grep TableStatus
 
+echo "Creating role"
+aws iam create-role --role-name dynamodb-full-access-role --assume-role-policy-document file://EC2_Trust_Policy.json | tr -d '"'
 aws iam attach-role-policy --role-name dynamodb-full-access-role --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+aws iam create-instance-profile --instance-profile-name dynamodb-full-access-role-instance-profile
+aws iam add-role-to-instance-profile --role-name dynamodb-full-access-role --instance-profile-name dynamodb-full-access-role-instance-profile
 
 echo "Launching EC2 instance"
 RUN_INSTANCES=$(aws ec2 run-instances   \
     --image-id "ami-04aa66cdfe687d427"  \
     --instance-type t2.micro            \
     --key-name $KEY_NAME                \
-    --security-groups $SEC_GRP          \
-    --iam-instance-profile Name="EC2_DynamoDB")
-
+    --security-groups $SEC_GRP)
 
 INSTANCE_ID=$(echo $RUN_INSTANCES | jq -r '.Instances[0].InstanceId')
 
 aws ec2 wait instance-running --instance-ids $INSTANCE_ID
+
+echo "Associate iam instance profile"
+aws ec2 associate-iam-instance-profile --instance-id $INSTANCE_ID --iam-instance-profile Name=dynamodb-full-access-role-instance-profile | tr -d '"'
 
 PUBLIC_IP=$(aws ec2 describe-instances  --instance-ids $INSTANCE_ID | \
             jq -r '.Reservations[0].Instances[0].PublicIpAddress')
