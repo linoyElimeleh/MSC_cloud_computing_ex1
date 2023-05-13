@@ -65,7 +65,7 @@ scp -i $KEY_PAIR_FILE -o "StrictHostKeyChecking=no" -o "ConnectionAttempts=60" a
 scp -i $KEY_PAIR_FILE -o "StrictHostKeyChecking=no" -o "ConnectionAttempts=60" requirements.txt ubuntu@$PUBLIC_IP:/home/ubuntu/
 
 echo "Updating and starting app"
-ssh -o "StrictHostKeyChecking=no" -o "ConnectionAttempts=10" -i $KEY_PAIR_FILE ubuntu@$PUBLIC_IP << EOF
+ssh -T -o "StrictHostKeyChecking=no" -o "ConnectionAttempts=10" -i $KEY_PAIR_FILE ubuntu@$PUBLIC_IP << EOF
     sudo apt-get update -y
     sudo apt-get upgrade -y
     sudo apt update -y
@@ -74,6 +74,6 @@ ssh -o "StrictHostKeyChecking=no" -o "ConnectionAttempts=10" -i $KEY_PAIR_FILE u
     sudo pip3 install --upgrade pip
     pip3 install -r requirements.txt
     export FLASK_APP=app/app.py
-    python3 -m flask run --host=0.0.0.0
+    nohup python3 -m flask run --host=0.0.0.0 &>/dev/null &
     exit
 EOF
