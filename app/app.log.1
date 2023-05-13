@@ -1,0 +1,133 @@
+ * Serving Flask app 'app'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+[2023-05-13 19:11:27,665] ERROR in app: Exception on /entry [POST]
+Traceback (most recent call last):
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/app/app.py", line 30, in entry_parking
+    plate_number = int(plate_number)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+Exception on /entry [POST]
+Traceback (most recent call last):
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/app/app.py", line 30, in entry_parking
+    plate_number = int(plate_number)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+127.0.0.1 - - [13/May/2023 19:11:27] "[35m[1mPOST /entry?plate=123-123-123&amp;parkingLot=382 HTTP/1.1[0m" 500 -
+[2023-05-13 19:11:28,182] ERROR in app: Exception on /entry [POST]
+Traceback (most recent call last):
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/app/app.py", line 30, in entry_parking
+    plate_number = int(plate_number)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+Exception on /entry [POST]
+Traceback (most recent call last):
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/app/app.py", line 30, in entry_parking
+    plate_number = int(plate_number)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+127.0.0.1 - - [13/May/2023 19:11:28] "[35m[1mPOST /entry?plate=123-123-123&amp;parkingLot=382 HTTP/1.1[0m" 500 -
+[2023-05-13 19:11:36,047] ERROR in app: Exception on /entry [POST]
+Traceback (most recent call last):
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/app/app.py", line 30, in entry_parking
+    plate_number = int(plate_number)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+Exception on /entry [POST]
+Traceback (most recent call last):
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/app/app.py", line 30, in entry_parking
+    plate_number = int(plate_number)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+127.0.0.1 - - [13/May/2023 19:11:36] "[35m[1mPOST /entry?plate=123-123-123&parkingLot=382 HTTP/1.1[0m" 500 -
+127.0.0.1 - - [13/May/2023 19:12:01] "[31m[1mPOST /entry?plateNumber=123-123-123&parkingLot=382 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [13/May/2023 19:12:11] "POST /entry?plateNumber=1234343&parkingLot=382 HTTP/1.1" 200 -
+[2023-05-13 19:12:34,127] ERROR in app: Exception on /exit [POST]
+Traceback (most recent call last):
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/app/app.py", line 57, in exit_parking
+    if 'Item' not in car_data.keys():
+AttributeError: 'list' object has no attribute 'keys'
+Exception on /exit [POST]
+Traceback (most recent call last):
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/app/app.py", line 57, in exit_parking
+    if 'Item' not in car_data.keys():
+AttributeError: 'list' object has no attribute 'keys'
+127.0.0.1 - - [13/May/2023 19:12:34] "[35m[1mPOST /exit?ticketId=1234343.1683994331 HTTP/1.1[0m" 500 -
+ * Serving Flask app 'app'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+[2023-05-13 19:13:13,832] ERROR in app: Exception on /exit [POST]
+Traceback (most recent call last):
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/app/app.py", line 57, in exit_parking
+    if 'Item' not in car_data.keys():
+AttributeError: 'NoneType' object has no attribute 'keys'

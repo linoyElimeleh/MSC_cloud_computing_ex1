@@ -1,13 +1,11 @@
-from enum import Enum
+import json
+import logging
+import math
+import sys
+from datetime import datetime
+from logging.handlers import RotatingFileHandler
 
 from flask import Response, Flask, request
-import boto3
-from datetime import datetime
-import json
-from logging.handlers import RotatingFileHandler
-import logging
-import sys
-import math
 
 app = Flask(__name__)
 
@@ -20,17 +18,8 @@ app.logger.addHandler(handler)
 sys.stdout = handler.stream
 sys.stderr = handler.stream
 
-TABLE_NAME = 'ParkingLotDB'
-dynamodb_client = boto3.resource('dynamodb', region_name='eu-central-1')
-parking_lot_table = dynamodb_client.Table('ParkingLotDB')
-
-
-class DynamoDbKeys(Enum):
-    TICKET_ID = 'ticket_id'
-    ENTRY_TIMESTAMP = 'entry_timestamp'
-    PLATE_NUMBER = 'plate_number'
-    PARKING_LOT = 'parking_lot'
-
+# dictionary to store parking lot data, key = ticket id, value = [license plate, parking lot id, entry time]
+parking_lot_data = {}
 
 @app.route('/entry', methods=['POST'])
 def entry_parking():
@@ -47,10 +36,8 @@ def entry_parking():
 
     ticket_id = calculate_unique_ticket_id(entry_time, plate_number)
 
-    parking_lot_table.put_item(Item={DynamoDbKeys.TICKET_ID.value: ticket_id,
-                                     DynamoDbKeys.ENTRY_TIMESTAMP.value: entry_time.strftime('%s'),
-                                     DynamoDbKeys.PLATE_NUMBER.value: plate_number,
-                                     DynamoDbKeys.PARKING_LOT.value: parking_lot})
+    # store entry data in dictionary
+    parking_lot_data[ticket_id] = [plate_number, parking_lot, entry_time.strftime('%s')]
 
     return Response(mimetype='application/json',
                     response=json.dumps({'ticketId': ticket_id}),
@@ -65,16 +52,14 @@ def calculate_unique_ticket_id(datetime, plate_number):
 def exit_parking():
     ticket_id = request.args.get('ticketId')
 
-    car_data = parking_lot_table.get_item(Key={DynamoDbKeys.TICKET_ID.value: ticket_id})
+    car_data = parking_lot_data.get(ticket_id)
 
     if 'Item' not in car_data.keys():
         return Response(mimetype='application/json',
                         response=json.dumps({'error': 'Invalid ticket id'}),
                         status=400)
 
-    entry_time = datetime.fromtimestamp(int(car_data["Item"][DynamoDbKeys.ENTRY_TIMESTAMP.value]))
-    plate_number = int(car_data["Item"][DynamoDbKeys.PLATE_NUMBER.value])
-    parking_lot = int(car_data["Item"][DynamoDbKeys.PARKING_LOT.value])
+    plate_number, parking_lot, entry_time = car_data
 
     # calculate parked time in minutes
     parked_time_minutes = int((datetime.now() - entry_time).total_seconds() / 60)

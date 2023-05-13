@@ -1,0 +1,13 @@
+Exception on /exit [POST]
+Traceback (most recent call last):
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1825, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1823, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/venv/lib/python3.9/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/linoyelimeleh/PycharmProjects/ex1/app/app.py", line 57, in exit_parking
+    if 'Item' not in car_data.keys():
+AttributeError: 'NoneType' object has no attribute 'keys'

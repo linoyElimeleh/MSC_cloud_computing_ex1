@@ -27,26 +27,6 @@ aws ec2 authorize-security-group-ingress        \
     --group-name $SEC_GRP --port 5000 --protocol tcp \
     --cidr $MY_IP/32 | tr -d '"'
 
-echo "Create table"
-aws dynamodb create-table \
-    --table-name "ParkingLotDB" \
-    --attribute-definitions AttributeName=ticket_id,AttributeType=S \
-    --key-schema AttributeName=ticket_id,KeyType=HASH \
-    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 | tr -d '"'
-
-aws dynamodb describe-table --table-name ParkingLotDB | grep TableStatus
-
-aws iam attach-role-policy --role-name dynamodb-full-access-role --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
-
-echo "Launching EC2 instance"
-RUN_INSTANCES=$(aws ec2 run-instances   \
-    --image-id "ami-04aa66cdfe687d427"  \
-    --instance-type t2.micro            \
-    --key-name $KEY_NAME                \
-    --security-groups $SEC_GRP          \
-    --iam-instance-profile Name="EC2_DynamoDB")
-
-
 INSTANCE_ID=$(echo $RUN_INSTANCES | jq -r '.Instances[0].InstanceId')
 
 aws ec2 wait instance-running --instance-ids $INSTANCE_ID
